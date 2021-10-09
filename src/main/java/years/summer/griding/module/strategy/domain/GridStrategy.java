@@ -1,8 +1,11 @@
 package years.summer.griding.module.strategy.domain;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 
 import years.summer.griding.module.plan.domain.PlanConfig;
+import years.summer.griding.module.plan.domain.PlanItem;
 
 /**
  * 网格策略
@@ -20,4 +23,10 @@ public interface GridStrategy {
      * @return 压力测试后的最大投入金额
      */
     BigDecimal pressureTest();
+
+    /**
+     * 生成计划的网格项
+     * @return 网格项列表
+     */
+    List<PlanItem> gridItems();
 }

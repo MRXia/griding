@@ -1,7 +1,10 @@
 package years.summer.griding.module.plan.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,32 +17,36 @@ import years.summer.griding.module.strategy.enums.StrategyVersion;
  * 投资计划
  * @author xiazijian
  */
-@Getter
 public class PlanConfig {
 
     /**
      * 产品代码
      */
+    @Getter
     private final String code;
 
     /**
      * 产品名称
      */
+    @Getter
     private final String name;
 
     /**
      * 基准价
      */
+    @Getter
     private final BigDecimal basePrice;
 
     /**
      * 网格大小（百分比）
      */
+    @Getter
     private final Percentile gridSize;
 
     /**
      * 网格深度
      */
+    @Getter
     private final Integer gridDepth;
 
 
@@ -55,7 +62,7 @@ public class PlanConfig {
         return gridSize;
     }
 
-    
+
     /*public BigDecimal nextBuyingPrice(PlanItem item) {
 
     }
@@ -78,5 +85,25 @@ public class PlanConfig {
         this.gridSize = new Percentile(gridSize);
         this.gridDepth = gridDepth;
         this.strategy = strategyVersion.newStrategy(this);
+    }
+
+    public List<PlanItem> getPlanItems() {
+
+        if (planItems == null) {
+            initItems();
+        }
+
+        return planItems;
+    }
+
+
+    /**
+     * 初始化计划列表
+     */
+    public synchronized void initItems() {
+        if (planItems != null) {
+            return;
+        }
+        planItems = strategy.gridItems();
     }
 }
